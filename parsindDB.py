@@ -4,8 +4,13 @@ import pandas as pd
 file_path = '2_курс,1_сем_2020_21_уч_г_зима_от_27_01_2022_долги_все_институты.xlsx'
 data = pd.read_excel(file_path)
 
+data.drop(0, inplace=True)
+
+
+
+
 # Очистка данных
-data_cleaned = data.drop(columns=['№ \nп/п', 'ФИО', 'Номер ЛД'])
+data_cleaned = data.drop(columns=['ФИО', 'Номер ЛД'] )
 
 # Заполнение пропусков
 data_cleaned = data_cleaned.fillna('Нет данных')
@@ -16,12 +21,14 @@ grade_mapping = {
     'отлично': 5, 'хорошо': 4, 'удовлетворительно': 3,
     'неудовлетворительно': 2, 'неуд': 2, 'Неудовлетворительно': 2, 'Неуд': 2,
     'Отлично': 5, 'Хорошо': 4, 'Удовлетворительно': 3,
-    'Неявка': 0, 'З/О': 1, 'Нет данных': 0
+    'Неявка': 0, 'З/О': 1, 'Нет данных': -1
 }
 
 # Применение маппинга к оценкам
 for col in data_cleaned.columns[4:-2]:
     data_cleaned[col] = data_cleaned[col].apply(lambda x: grade_mapping.get(str(x), 0))
+
+print(data_cleaned.head())
 
 # Преобразование 'Статус' в бинарный признак
 data_cleaned['Статус'] = data_cleaned['Статус'].apply(lambda x: 1 if x == 'Отчислен' else 0)
