@@ -25,7 +25,7 @@ grade_mapping = {
 }
 
 # Применение маппинга к оценкам
-for col in data_cleaned.columns[4:-2]:
+for col in data_cleaned.columns[3:-2]:
     data_cleaned[col] = data_cleaned[col].apply(lambda x: grade_mapping.get(str(x), 0))
 
 print(data_cleaned.head())
