@@ -1,6 +1,8 @@
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
+import joblib
+
 
 # Загрузка данных
 
@@ -17,10 +19,13 @@ X_test = X_test.apply(lambda x: x.str.replace(' ', '').astype(float) if x.dtype 
 
 # Создание модели дерева решений
 
-model2 = LogisticRegression()
-model2.fit(X_train, y_train)
+model = LogisticRegression()
+model.fit(X_train, y_train)
 
-y_pred = model2.predict(X_test)
+# Сохранение модели
+joblib.dump(model, 'model.pkl')
+
+y_pred = model.predict(X_test)
 
 accuracy = accuracy_score(y_test, y_pred)
 
