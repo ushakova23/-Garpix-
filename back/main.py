@@ -28,7 +28,7 @@ app.add_middleware(
 )
 
 
-model = joblib.load('/Users/amina/garpix_prartice_2024/model/model.pkl')
+model = joblib.load('model/model.pkl')
 
 class PredictionRequest(BaseModel):
     data: list
